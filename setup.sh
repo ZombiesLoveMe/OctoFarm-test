@@ -41,7 +41,7 @@ echo "Starting MongoDB service..."
 systemctl start mongod
 systemctl enable mongod
 
-mv octofarm.service ~/etc/systemd/system/
+mv ~/OctoFarm-test/OctoFarm.service ~/etc/systemd/system/
 
 systemctl daemon-reload
 systemctl enable octofarm
