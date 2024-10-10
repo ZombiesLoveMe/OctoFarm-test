@@ -38,13 +38,13 @@ echo "Building client..."
 npm run build-client
 
 echo "Starting MongoDB service..."
-sudo systemctl start mongod
-sudo systemctl enable mongod
+systemctl start mongod
+systemctl enable mongod
 
 mv octofarm.service ~/etc/systemd/system/
 
-sudo systemctl daemon-reload
-sudo systemctl enable octofarm
-sudo systemctl start octofarm
+systemctl daemon-reload
+systemctl enable octofarm
+systemctl start octofarm
 
 echo "Setup complete. You can now login via <your server IP>:4000"
