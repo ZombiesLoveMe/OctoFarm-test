@@ -8,7 +8,7 @@ apt upgrade -y
 apt install -y git 
 apt install -y curl 
 
-curl -fsSL https://deb.nodesource.com/setup_14.x | bash -
+curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
 
 apt install -y nodejs 
 apt install -y npm
