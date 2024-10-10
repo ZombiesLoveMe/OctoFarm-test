@@ -77,8 +77,14 @@ Before installing, it is best to read the getting started documents here:
 [Getting Started](https://docs.octofarm.net/getting-started/)
 
 ## Installation Production
-Check out the OctoFarm documentation website for installation instructions on various platforms
-[Getting Started](https://docs.octofarm.net/installation/)
+installation can be done on debian or ubuntu via the below
+
+```sh
+git clone https://github.com/ZombiesLoveMe/OctoFarm-test
+cd OctoFarm-test
+chmod +x setup.sh
+./setup.sh
+```
 
 ## Installation Development
 ### Requirements
