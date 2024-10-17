@@ -1,10 +1,19 @@
+# Ignore test-related files from export
 /test export-ignore
 app-test.js export-ignore
+testPrinter.json export-ignore
+testPrinters.json export-ignore
+
+# Ignore build tools and configuration files from export
 gulpfile.js export-ignore
 babel.config.js export-ignore
+
+# Ignore ESLint configuration from export
 .eslintrc.js export-ignore
+
+# Ignore GitHub metadata and attributes files from export
 .github export-ignore
-.gitattributes export-ignore  
+.gitattributes export-ignore
+
+# Ignore .gitignore file from export
 .gitignore export-ignore
-testPrinter.json export-ignore 
-testPrinters.json export-ignore
