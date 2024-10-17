@@ -1,13 +1,32 @@
-/.github
-/.idea
+# Ignore all files in the .github and .idea directories (usually for project metadata/configuration)
+.github
+.idea
+
+# Ignore Git's internal tracking files
 .git
+
+# Ignore environment variable files (usually contains sensitive information like API keys)
 .env
+
+# Ignore all .gitignore files (so these are not tracked in version control)
 .gitignore
+
+# Ignore all environment files with any extension
 *.env
+
+# Ignore docker-compose configuration files (used for Docker containers)
 *docker-compose.yml
+
+# Ignore Dockerfile files (used for building Docker images)
 *Dockerfile
+
+# Ignore markdown documentation and text files
 *.md
 *.txt
-/.build
-/.cache
+
+# Ignore build artifacts and cache directories (used for temporary build and cache data)
+.build
+.cache
+
+# Ignore the Makefile (build instructions for various tools)
 Makefile
