@@ -102,7 +102,7 @@ cd OctoFarm-test
 ```sh
 docker-compose up --build -d
 ```
-**You should now be able to access the server using http://<your-server-ip>:4000**
+**You should now be able to access the server using http://your-server-ip:4000**
 
 ## Installation Development
 ### Requirements
