@@ -1,7 +1,7 @@
 # Use Debian as the base image
 FROM debian:bullseye-slim as base
 
-# Install dependencies: Node.js 18.x, npm, tini (for process management), MongoDB, and necessary tools
+# Install common dependencies: curl, ca-certificates, gnupg2, tini, and wget
 RUN apt-get update && apt-get install -y \
     curl \
     ca-certificates \
@@ -9,12 +9,20 @@ RUN apt-get update && apt-get install -y \
     lsb-release \
     tini \
     wget \
-    && curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
-    && apt-get install -y nodejs \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Node.js 18.x from NodeSource (handle errors more gracefully)
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
+    && apt-get update \
+    && apt-get install -y --fix-missing --fix-broken nodejs \
     && npm install -g pm2 \
-    && wget -qO - https://www.mongodb.org/static/pgp/server-6.0.asc | apt-key add - \
+    && rm -rf /var/lib/apt/lists/*
+
+# Add MongoDB repository and install MongoDB
+RUN wget -qO - https://www.mongodb.org/static/pgp/server-6.0.asc | apt-key add - \
     && echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/debian bullseye/mongodb-org/6.0 main" | tee /etc/apt/sources.list.d/mongodb-org-6.0.list \
-    && apt-get update && apt-get install -y mongodb-org \
+    && apt-get update \
+    && apt-get install -y --fix-missing --fix-broken mongodb-org \
     && rm -rf /var/lib/apt/lists/*
 
 # Set environment to production
