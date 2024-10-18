@@ -77,14 +77,32 @@ Before installing, it is best to read the getting started documents here:
 [Getting Started](https://docs.octofarm.net/getting-started/)
 
 ## Installation Production
-installation can be done on debian or ubuntu via the below
+installing can be done via docker compose to achive this follow the below
 
+SSH into your server and run the below commands
+
+**Updates**
+```sh
+apt-get update
+apt-get upgrade -y
+```
+**Install Docker Compose**
+```sh
+apt install docker-compose -y
+```
+**Download the Git Repo**
 ```sh
 git clone https://github.com/ZombiesLoveMe/OctoFarm-test
-cd OctoFarm-test
-chmod +x setup.sh
-./setup.sh
 ```
+**Change into OctoFarm folder**
+```sh
+cd OctoFarm-test
+```
+**Run Docker Compose**
+```sh
+docker-compose up --build -d
+```
+**You should now be able to access the server using http://<your-server-ip>:4000**
 
 ## Installation Development
 ### Requirements
