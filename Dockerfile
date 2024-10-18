@@ -1,17 +1,17 @@
 # Use Debian as the base image
 FROM debian:bullseye-slim as base
 
-# Install common dependencies: curl, ca-certificates, gnupg2, tini, and wget
+# Install common dependencies and tini
 RUN apt-get update && apt-get install -y \
     curl \
     ca-certificates \
     gnupg2 \
     lsb-release \
-    tini \
     wget \
+    tini \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Node.js 18.x from NodeSource (handle errors more gracefully)
+# Install Node.js 18.x
 RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
     && apt-get update \
     && apt-get install -y --fix-missing --fix-broken nodejs \
@@ -22,7 +22,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
 RUN wget -qO - https://www.mongodb.org/static/pgp/server-6.0.asc | apt-key add - \
     && echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/debian bullseye/mongodb-org/6.0 main" | tee /etc/apt/sources.list.d/mongodb-org-6.0.list \
     && apt-get update \
-    && apt-get install -y --fix-missing --fix-broken mongodb-org \
+    && apt-get install -y mongodb-org \
     && rm -rf /var/lib/apt/lists/*
 
 # Set environment to production
@@ -79,8 +79,8 @@ WORKDIR /app
 # Ensure the entrypoint script has execute permissions
 RUN chmod +x ./docker/entrypoint.sh
 
-# Use tini to manage the main process and prevent zombie processes
-ENTRYPOINT ["/sbin/tini", "--"]
+# Use tini from /usr/bin to manage the main process and prevent zombie processes
+ENTRYPOINT ["/usr/bin/tini", "--"]
 
 # Start MongoDB and then run the OctoFarm application
 CMD ["/bin/bash", "/docker-entrypoint.sh", "./docker/entrypoint.sh"]
