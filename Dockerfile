@@ -1,75 +1,64 @@
-# Use Alpine Linux 3.14 as the base image
-# Node.js version 14.17.0 is installed from Alpine 3.14's package repository
-FROM alpine:3.14 as base
+# Use Debian as the base image and install Node.js 18.x from the official Node.js repository
+FROM debian:bullseye-slim as base
 
-# Install Node.js, npm, and tini for process management
-RUN apk add --no-cache --virtual .base-deps \
-    nodejs \
-    npm \
-    tini
+# Install dependencies: Node.js 18.x, npm, tini (for process management), and necessary tools
+RUN apt-get update && apt-get install -y \
+    curl \
+    ca-certificates \
+    gnupg2 \
+    tini \
+    && curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
+    && apt-get install -y nodejs \
+    && npm install -g pm2 \
+    && rm -rf /var/lib/apt/lists/*
 
 # Set the environment to production
 ENV NODE_ENV=production
 
-# Install the latest version of npm and pm2 (process manager)
-RUN npm install -g npm@latest
-RUN npm install -g pm2
-
 # Create a user 'octofarm' and set up the working directory and permissions
-RUN adduser -D octofarm --home /app && \
-    mkdir -p /scripts && \
-    chown -R octofarm:octofarm /scripts/
+RUN useradd -ms /bin/bash octofarm \
+    && mkdir -p /app /scripts \
+    && chown -R octofarm:octofarm /app /scripts
 
-# Begin the build process
-FROM base as compiler
+# Build stage
+FROM base as builder
 
 # Install build dependencies for compiling native addons
-RUN apk add --no-cache --virtual .build-deps \
-    alpine-sdk \
-    make \
-    gcc \
-    g++ \
-    python3
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    python3 \
+    && rm -rf /var/lib/apt/lists/*
 
-# Set working directory to /tmp/app for temporary app build files
+# Set the working directory for the build
 WORKDIR /tmp/app
 
-# Copy server-side package files to the build directory
+# Copy server-side package files
 COPY server/package.json ./server/package.json
 COPY server/package-lock.json ./server/package-lock.json
 
-# Set working directory to /tmp/app/server for installing server dependencies
 WORKDIR /tmp/app/server
 
-# Install production dependencies using npm ci (clean install)
+# Install production dependencies using npm ci
 RUN npm ci --omit=dev
 
-# Remove build dependencies after installing server packages to reduce image size
-RUN apk del .build-deps
-
-# Reset working directory to /tmp/app
-WORKDIR /tmp/app
-
-# Runtime stage for the final image
+# Runtime stage
 FROM base as runtime
 
-# Copy the compiled node_modules from the build stage and assign the correct permissions
-COPY --chown=octofarm:octofarm --from=compiler /tmp/app/server/node_modules /app/server/node_modules
-# Copy the rest of the application files and set ownership to the 'octofarm' user
+# Copy the compiled node_modules from the builder stage
+COPY --chown=octofarm:octofarm --from=builder /tmp/app/server/node_modules /app/server/node_modules
+
+# Copy the rest of the application files and set ownership to 'octofarm'
 COPY --chown=octofarm:octofarm . /app
 
-# Clean up temporary files
-RUN rm -rf /tmp/app
-
-# Switch to the 'octofarm' user
+# Switch to the 'octofarm' user and set the working directory
 USER octofarm
-# Set the working directory to /app
 WORKDIR /app
 
 # Ensure the entrypoint script has execute permissions
 RUN chmod +x ./docker/entrypoint.sh
 
-# Use tini as the entrypoint to manage zombie processes
-ENTRYPOINT [ "/sbin/tini", "--" ]
-# Run the entrypoint script to start the application
+# Use tini to manage the main process and prevent zombie processes
+ENTRYPOINT ["/usr/bin/tini", "--"]
+
+# Default command to start the application
 CMD ["./docker/entrypoint.sh"]
