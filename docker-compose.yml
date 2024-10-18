@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:6.0
+    container_name: mongodb
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+    volumes:
+      - mongo-data:/data/db
+    ports:
+      - "27017:27017"
+
+  octofarm:
+    build: .
+    container_name: octofarm
+    ports:
+      - "4000:4000"
+    environment:
+      NODE_ENV: production
+      MONGO: mongodb://mongodb:27017/octofarm  # Reference MongoDB service
+    depends_on:
+      - mongodb  # Ensure MongoDB is up before OctoFarm
+    restart: always
+    volumes:
+      - ./app:/app  # Example of mounting app directory, adjust based on your setup
+
+volumes:
+  mongo-data:
