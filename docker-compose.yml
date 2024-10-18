@@ -22,7 +22,7 @@ services:
       NODE_ENV: production
       MONGO: mongodb://mongodb:27017/octofarm  # Reference MongoDB service
     depends_on:
-      - mongodb  # Ensure MongoDB is up before OctoFarm
+      - mongodb  # Ensure MongoDB is up before Octofarm
     restart: always
     volumes:
       - ./app:/app  # Example of mounting app directory, adjust based on your setup
