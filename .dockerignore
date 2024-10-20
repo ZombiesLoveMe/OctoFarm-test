@@ -14,11 +14,9 @@
 # Ignore all environment files with any extension
 *.env
 
-# Ignore docker-compose configuration files (used for Docker containers)
-*docker-compose.yml
-
-# Ignore Dockerfile files (used for building Docker images)
-*Dockerfile
+# Keep Dockerfiles and docker-compose.yml for Docker builds
+# *docker-compose.yml   <-- Comment this out if you want to keep it in your build context
+# *Dockerfile           <-- Comment this out if you want to keep it in your build context
 
 # Ignore markdown documentation and text files
 *.md
