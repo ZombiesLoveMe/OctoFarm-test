@@ -34,11 +34,11 @@ RUN useradd -ms /bin/bash octofarm \
     && mkdir -p /app /scripts /data/db \
     && chown -R octofarm:octofarm /app /scripts /data/db
 
-# Copy server files
-COPY server/package.json /app/package.json
-COPY server/package-lock.json /app/package-lock.json
+# Check if the /app/docker directory exists, if not, create it and then copy the entrypoint.sh script
+RUN mkdir -p /app/docker \
+    && chmod +x /app/docker
 
-# Copy entrypoint.sh
+# Copy entrypoint.sh to /app/docker/
 COPY docker/entrypoint.sh /app/docker/entrypoint.sh
 
 # Ensure entrypoint.sh has execute permissions
