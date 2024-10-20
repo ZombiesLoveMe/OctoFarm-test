@@ -42,6 +42,9 @@ COPY server/package-lock.json /app/package-lock.json
 WORKDIR /app
 RUN npm install --omit=dev
 
+# Create the /app/docker directory inside the container
+RUN mkdir -p /app/docker
+
 # Copy entrypoint.sh to /app/docker/ and ensure it has execute permissions
 COPY docker/entrypoint.sh /app/docker/entrypoint.sh
 RUN chmod +x /app/docker/entrypoint.sh
