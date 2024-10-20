@@ -4,7 +4,6 @@ services:
   mongodb:
     image: mongo:6.0
     container_name: mongodb
-    network_mode: "host"  # Use the host network stack
     restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
@@ -17,7 +16,6 @@ services:
   octofarm:
     build: .
     container_name: octofarm
-    network_mode: "host"  # Use the host network stack
     ports:
       - "4000:4000"
     environment:
