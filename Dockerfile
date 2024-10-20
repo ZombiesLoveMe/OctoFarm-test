@@ -34,6 +34,11 @@ RUN useradd -ms /bin/bash octofarm \
     && mkdir -p /app /scripts /data/db \
     && chown -R octofarm:octofarm /app /scripts /data/db
 
+# Copy the server directory to /app
+COPY server /app/server
+# Ensure correct working directory
+WORKDIR /app/server
+
 # Copy package.json and package-lock.json to /app
 COPY server/package.json /app/package.json
 COPY server/package-lock.json /app/package-lock.json
