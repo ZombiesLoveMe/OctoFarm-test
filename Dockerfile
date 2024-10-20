@@ -34,19 +34,17 @@ RUN useradd -ms /bin/bash octofarm \
     && mkdir -p /app /scripts /data/db \
     && chown -R octofarm:octofarm /app /scripts /data/db
 
-# Check if the /app/docker directory exists, if not, create it and then copy the entrypoint.sh script
-RUN mkdir -p /app/docker \
-    && chmod +x /app/docker
+# Copy package.json and package-lock.json to /app
+COPY server/package.json /app/package.json
+COPY server/package-lock.json /app/package-lock.json
 
-# Copy entrypoint.sh to /app/docker/
-COPY docker/entrypoint.sh /app/docker/entrypoint.sh
-
-# Ensure entrypoint.sh has execute permissions
-RUN chmod +x /app/docker/entrypoint.sh
-
-# Install dependencies
+# Install dependencies using npm install instead of npm ci
 WORKDIR /app
-RUN npm ci --omit=dev
+RUN npm install --omit=dev
+
+# Copy entrypoint.sh to /app/docker/ and ensure it has execute permissions
+COPY docker/entrypoint.sh /app/docker/entrypoint.sh
+RUN chmod +x /app/docker/entrypoint.sh
 
 # Use tini from /usr/bin to manage the main process and prevent zombie processes
 ENTRYPOINT ["/usr/bin/tini", "--"]
