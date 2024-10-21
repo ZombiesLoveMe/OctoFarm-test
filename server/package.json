@@ -65,7 +65,7 @@
     "passport-remember-me": "0.0.1",
     "primus": "^8.0.6",
     "pws": "^7.0.0",
-    "rotating-file-stream": "^2.1.4",
+    "rotating-file-stream": "^2.3.4",
     "sanitize": "^2.1.2",
     "semver": "^7.5.4",
     "sharp": "^0.32.1",
