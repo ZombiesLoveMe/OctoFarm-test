@@ -1,0 +1,48 @@
+name: Dockerfile Creator/Updater
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  create-or-update-dockerfile:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out the code
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Step 2: Generate Dockerfile (if it doesn't exist) or update it
+      - name: Generate or Update Dockerfile
+        run: |
+          # Dockerfile path
+          DOCKERFILE=Dockerfile
+          
+          # Check if Dockerfile already exists
+          if [ ! -f "$DOCKERFILE" ]; then
+            echo "Creating a new Dockerfile..."
+            # Create a basic Dockerfile template if it doesn't exist
+            echo "FROM node:18-alpine" > $DOCKERFILE
+            echo "WORKDIR /app" >> $DOCKERFILE
+            echo "COPY . /app" >> $DOCKERFILE
+            echo "RUN npm install" >> $DOCKERFILE
+            echo "CMD [ \"npm\", \"start\" ]" >> $DOCKERFILE
+          else
+            echo "Updating existing Dockerfile..."
+            # Optionally append or update the Dockerfile if certain conditions are met
+            sed -i 's/FROM node:.*/FROM node:18-alpine/' $DOCKERFILE
+          fi
+
+      # Step 3: Commit the changes to the repository if the Dockerfile was created or updated
+      - name: Commit Dockerfile changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add Dockerfile
+          git commit -m "Update Dockerfile via GitHub Actions" || echo "No changes to commit"
+          git push
