@@ -1,0 +1,58 @@
+name: Docker Compose Creator/Updater
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  create-or-update-docker-compose:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out the code
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Step 2: Generate Docker Compose file (if it doesn't exist) or update it
+      - name: Generate or Update Docker Compose
+        run: |
+          # Define the path to docker-compose.yml
+          DOCKER_COMPOSE_FILE=docker-compose.yml
+          
+          # Check if docker-compose.yml already exists
+          if [ ! -f "$DOCKER_COMPOSE_FILE" ]; then
+            echo "Creating a new docker-compose.yml..."
+            # Create a basic docker-compose.yml template
+            cat <<EOT >> $DOCKER_COMPOSE_FILE
+version: '3'
+services:
+  app:
+    image: node:18-alpine
+    container_name: app
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: npm start
+    ports:
+      - "4000:4000"
+    environment:
+      - NODE_ENV=production
+EOT
+          else
+            echo "Updating existing docker-compose.yml..."
+            # Optionally append or update the Docker Compose file based on your requirements
+            sed -i 's/image:.*/image: node:18-alpine/' $DOCKER_COMPOSE_FILE
+          fi
+
+      # Step 3: Commit the changes to the repository if docker-compose.yml was created or updated
+      - name: Commit Docker Compose changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add docker-compose.yml
+          git commit -m "Update docker-compose.yml via GitHub Actions" || echo "No changes to commit"
+          git push
