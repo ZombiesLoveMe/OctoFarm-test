@@ -49,6 +49,7 @@ RUN npm install --omit=dev
 
 # Create the /app/docker directory inside the container
 RUN mkdir -p /app/docker
+WORKDIR /app/docker
 
 # Copy entrypoint.sh to /app/docker/ and ensure it has execute permissions
 COPY docker/entrypoint.sh /app/docker/entrypoint.sh
