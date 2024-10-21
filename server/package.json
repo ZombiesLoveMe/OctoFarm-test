@@ -27,7 +27,7 @@
   "author": "James Mackay (NotExpectedYet)",
   "license": "ISC",
   "dependencies": {
-    "archiver": "^5.3.1",
+    "archiver": "^7.0.1",
     "auto-git-update": "^2.0.0",
     "bcryptjs": "^2.4.3",
     "connect-flash": "^0.1.1",
@@ -45,7 +45,7 @@
     "influx": "^5.9.3",
     "is-docker": "^2.2.1",
     "jsonwebtoken": "^9.0.1",
-    "lodash": "^4.17.23",
+    "lodash": "^4.17.22",
     "lookpath": "^1.2.2",
     "luxon": "^3.4.0",
     "marked": "^5.1.0",
