@@ -65,7 +65,7 @@
     "passport-remember-me": "0.0.2",
     "primus": "^8.1.0",
     "pws": "^7.0.1",
-    "rotating-file-stream": "^2.1.4",  // Updated version
+    "rotating-file-stream": "^2.1.4",
     "sanitize": "^2.1.2",
     "semver": "^7.5.4",
     "sharp": "^0.32.1",
@@ -77,8 +77,8 @@
     "winston": "^3.10.0",
     "ws": "^8.14.1",
     "xml2js": "^0.4.23",
-    "uuid": "^9.0.0",  // Updated from deprecated version
-    "lru-cache": "^7.16.0"  // Replaced inflight
+    "uuid": "^9.0.0", 
+    "lru-cache": "^7.16.0"
   },
   "engine-strict": true,
   "engines": {
