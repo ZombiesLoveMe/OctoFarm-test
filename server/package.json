@@ -42,7 +42,7 @@
     "express-session": "^1.17.4",
     "flatted": "^3.2.7",
     "helmet": "^7.0.0",
-    "influx": "^5.9.4",
+    "influx": "^5.9.3",
     "is-docker": "^2.3.0",
     "jsonwebtoken": "^9.0.1",
     "lodash": "^4.17.23",
