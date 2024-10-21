@@ -58,7 +58,7 @@
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
     "node-fetch": "^2.6.12",
-    "node-input-validator": "^5.0.1",
+    "node-input-validator": "^4.5.0",
     "node-upnp-ssdp": "^0.1.1",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
