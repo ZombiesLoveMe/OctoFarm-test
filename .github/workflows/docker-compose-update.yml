@@ -27,7 +27,7 @@ jobs:
           if [ ! -f "$DOCKER_COMPOSE_FILE" ]; then
             echo "Creating a new docker-compose.yml..."
             # Create a basic docker-compose.yml template
-            cat <<EOT >> $DOCKER_COMPOSE_FILE
+            cat <<EOT > $DOCKER_COMPOSE_FILE
 version: '3'
 services:
   app:
