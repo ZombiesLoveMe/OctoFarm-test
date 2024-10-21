@@ -27,7 +27,7 @@ jobs:
           if [ ! -f "$DOCKER_COMPOSE_FILE" ]; then
             echo "Creating a new docker-compose.yml..."
             # Create a basic docker-compose.yml template
-            cat <<EOT > $DOCKER_COMPOSE_FILE
+            cat << 'EOT' > $DOCKER_COMPOSE_FILE
 version: '3'
 services:
   app:
@@ -45,7 +45,7 @@ EOT
           else
             echo "Updating existing docker-compose.yml..."
             # Optionally append or update the Docker Compose file based on your requirements
-            sed -i 's/image:.*/image: node:18-alpine/' $DOCKER_COMPOSE_FILE
+            sed -i 's/image:.*/image: node:18-alpine/' "$DOCKER_COMPOSE_FILE"
           fi
 
       # Step 3: Commit the changes to the repository if docker-compose.yml was created or updated
