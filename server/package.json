@@ -62,7 +62,7 @@
     "node-upnp-ssdp": "^0.1.1",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
-    "passport-remember-me": "0.0.2",
+    "passport-remember-me": "0.0.1",
     "primus": "^8.1.0",
     "pws": "^7.0.1",
     "rotating-file-stream": "^2.1.4",
