@@ -48,6 +48,6 @@ RUN rm -rf /tmp/app
 USER octofarm
 WORKDIR /app
 
-RUN chmod +x ./docker/entrypoint.sh
+RUN chmod +x /docker/entrypoint.sh
 ENTRYPOINT [ "/sbin/tini", "--" ]
-CMD ["./docker/entrypoint.sh"]
+CMD ["/docker/entrypoint.sh"]
