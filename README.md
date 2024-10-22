@@ -77,6 +77,49 @@ Before installing, it is best to read the getting started documents here:
 [Getting Started](https://docs.octofarm.net/getting-started/)
 
 ## Installation Production
+
+**Manual install on debian 12**
+**Install MongoDB**
+
+```sh
+sudo apt-get install gnupg curl
+```
+```sh
+curl -fsSL https://www.mongodb.org/static/pgp/server-8.0.asc | sudo gpg -o /usr/share/keyrings/mongodb-server-8.0.gpg --dearmor
+```
+```sh
+echo "deb [ signed-by=/usr/share/keyrings/mongodb-server-8.0.gpg ] http://repo.mongodb.org/apt/debian bookworm/mongodb-org/8.0 main" | sudo tee /etc/apt/sources.list.d/mongodb-org-8.0.list
+```
+```sh
+sudo apt-get update
+```
+```sh
+sudo apt-get install -y mongodb-org
+```
+```sh
+sudo systemctl enable mongod
+```
+```sh
+**sudo apt-get install gnupg curl**
+```
+
+**Now Install OctoFarm**
+```sh
+apt-get install -y nodejs npm
+```
+```sh
+git clone https://github.com/ZombiesLoveMe/OctoFarm-test
+cd OctoFarm-test
+```
+```sh
+npm install
+```
+```sh
+npm run start
+```
+**You should now be able to access the server using http://your-server-ip:4000**
+
+**### CURRENTLY BROKEN ###**
 installing can be done via docker compose to achive this follow the below
 
 SSH into your server and run the below commands
