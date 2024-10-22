@@ -23,7 +23,7 @@ services:
       - mongodb  # Ensure MongoDB is up before Octofarm
     restart: always
     volumes:
-      - ./app:/app  # Example of mounting app directory, adjust based on your setup
+      - ./app/data:/app/data  # Mount only the data directory, if needed
 
 volumes:
   mongo-data:
