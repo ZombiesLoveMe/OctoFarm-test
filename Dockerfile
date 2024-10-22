@@ -52,6 +52,7 @@ RUN mkdir -p /app/docker
 WORKDIR /app/docker
 
 # Copy entrypoint.sh to /app/docker/ and ensure it has execute permissions
+RUN chmod +x /docker/entrypoint.sh
 COPY docker/entrypoint.sh /app/docker/entrypoint.sh
 RUN chmod +x /app/docker/entrypoint.sh
 
@@ -59,4 +60,5 @@ RUN chmod +x /app/docker/entrypoint.sh
 ENTRYPOINT ["/usr/bin/tini", "--"]
 
 # Start MongoDB and then run the OctoFarm application
-CMD ["/bin/bash", "./docker/entrypoint.sh"]
+CMD ["/bin/bash", "/app/docker/entrypoint.sh"]
+
