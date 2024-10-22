@@ -52,8 +52,8 @@ RUN mkdir -p /app/docker
 WORKDIR /app/docker
 
 # Copy entrypoint.sh to /app/docker/ and ensure it has execute permissions
-RUN chmod +x /docker/entrypoint.sh
-COPY docker/entrypoint.sh /app/docker/entrypoint.sh
+RUN chmod +x ./docker/entrypoint.sh
+COPY ./docker/entrypoint.sh /app/docker/entrypoint.sh
 RUN chmod +x /app/docker/entrypoint.sh
 
 # Use tini from /usr/bin to manage the main process and prevent zombie processes
