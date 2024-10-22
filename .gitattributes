@@ -17,3 +17,5 @@ babel.config.js export-ignore
 
 # Ignore .gitignore file from export
 .gitignore export-ignore
+
+*.sh text eol=lf
